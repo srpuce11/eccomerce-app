@@ -5,6 +5,7 @@ import Navbar from "./routing/Navbar";
 import { Route, Routes } from "react-router-dom";
 import { Home } from "./pages/Home";
 import About from "./pages/About";
+import {Products} from "./pages/Products";
 import { OrderSummary } from "./pages/OrderSummary";
 import { Login } from "./components/auth/Login";
 import { AuthProvider } from "./components/auth/auth";
@@ -19,6 +20,7 @@ function App() {
       <Routes>
       <Route path='/login' element={<Login />} />
         <Route path="/" element={<Home></Home>}></Route>
+        <Route path="/products" element={<Products></Products>}></Route>
         <Route
           path="/about"
           element={

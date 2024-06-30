@@ -16,8 +16,10 @@ code {
 .primary-nav {
   background-color: aliceblue;
   padding: 16px 32px;
+  display: flex;
+  justify-content: flex-end; /* Moves items to the right */
 }
 
 nav a {
-  margin-right: 16px;
+  margin-right: 20px;
 }

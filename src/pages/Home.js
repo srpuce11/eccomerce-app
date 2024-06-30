@@ -1,10 +1,11 @@
 import { useNavigate } from 'react-router-dom'
+import SliderHome from '../components/SliderCard/SliderHome'
 
 export const Home = () => {
   const navigate = useNavigate()
   return (
     <>
-      <div>Home Page</div>
+      <SliderHome></SliderHome>
       <button onClick={() => navigate('order-summary')}>Place order</button>
     </>
   )
