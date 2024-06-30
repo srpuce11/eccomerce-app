@@ -1,9 +1,9 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { useAuth } from '../components/auth/auth'
+import { useAuth } from "../components/auth/auth";
 
 function Navbar() {
-  const auth = useAuth()
+  const auth = useAuth();
 
   const navLinkStyles = ({ isActive }) => {
     return {
@@ -23,14 +23,17 @@ function Navbar() {
       <NavLink to="/shop" style={navLinkStyles}>
         Shop
       </NavLink>
+      <NavLink to="/cart" style={navLinkStyles}>
+        Cart
+      </NavLink>
       <NavLink to="/profile" style={navLinkStyles}>
         Profile
       </NavLink>
       {!auth?.user && (
-        <NavLink to='/login' style={navLinkStyles}>
+        <NavLink to="/login" style={navLinkStyles}>
           Login
         </NavLink>
-      )}  
+      )}
     </nav>
   );
 }

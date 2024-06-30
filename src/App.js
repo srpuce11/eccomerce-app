@@ -13,12 +13,16 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { RequireAuth } from "./components/auth/RequireAuth";
 import { Profile } from "./components/auth/Profile";
+import Cart from "./pages/Cart";
+
+import { CartProvider } from "./components/cartSegments/CartContext";
+import Product from "./pages/Product";
 const LazyAbout = React.lazy(() => import("./pages/About"));
 
 function App() {
   return (
     <AuthProvider>
-
+    <CartProvider>
     <ToastContainer
       position="top-right"
       autoClose={1000}
@@ -35,6 +39,8 @@ function App() {
       <Route path='/login' element={<Login />} />
         <Route path="/" element={<Home></Home>}></Route>
         <Route path="/shop" element={<Shop></Shop>}></Route>
+        <Route path="/shop/:id" element={<Product />} />
+        <Route path="/cart" element={<Cart></Cart>}></Route>
         <Route
           path="/about"
           element={
@@ -53,7 +59,7 @@ function App() {
           }
         />
       </Routes>
-
+      </CartProvider>
     </AuthProvider>
   );
 }

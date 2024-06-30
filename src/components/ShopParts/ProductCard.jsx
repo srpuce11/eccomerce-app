@@ -1,16 +1,20 @@
-import React from 'react'
+import React , {useContext}from 'react'
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Col, Container, Row } from "react-bootstrap";
+import { CartContext } from '../cartSegments/CartContext';
 import './product-card.css'
 
 const ProductCard = ({ title, productItem }) => {
 
+
+  const { addToCart } = useContext(CartContext);
   const router = useNavigate();
   const handelClick = () => {
     router(`/shop/${productItem.id}`);
   };
   const handelAdd = (productItem) => {
+    addToCart(productItem, 1);
     toast.success("Product has been added to cart!");
   };
 

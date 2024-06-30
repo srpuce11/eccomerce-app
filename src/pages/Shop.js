@@ -25,25 +25,18 @@ export const Shop = () => {
       <Banner title="product" />
       <input type="search" placeholder="Search products" />
       <section className="filter-bar">
-      <Container className="filter-bar-contianer">
-      <Row className="justify-content-center">
-        <Col md={4}>
-          <FilterSelect setFilterList={setFilterList} />
-        </Col>
-        <Col md={8}>
-         
-        </Col>
-      </Row>
-    </Container>
+        <Container className="filter-bar-contianer">
+          <Row className="justify-content-center">
+            <Col md={4}>
+              <FilterSelect setFilterList={setFilterList} />
+            </Col>
+            <Col md={8}></Col>
+          </Row>
+        </Container>
         <Container>
           <ShopList productItems={filterList} />
         </Container>
       </section>
-      <nav>
-        <Link to="featured">Featured</Link>
-        <Link to="new">New</Link>
-      </nav>
-      <Outlet />
     </Fragment>
   );
 };

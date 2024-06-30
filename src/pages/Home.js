@@ -1,11 +1,11 @@
-import { useNavigate } from 'react-router-dom'
-import SliderHome from '../components/SliderCard/SliderHome'
+import { useNavigate } from "react-router-dom";
+import SliderHome from "../components/SliderCard/SliderHome";
 
 export const Home = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   return (
     <>
       <SliderHome></SliderHome>
     </>
-  )
-}
+  );
+};

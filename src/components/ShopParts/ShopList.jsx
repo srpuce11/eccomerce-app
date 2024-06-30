@@ -11,11 +11,13 @@ const ShopList = ({ productItems }) => {
     <Row className="justify-content-center">
       {productItems?.map((productItem) => {
         return (
+
           <ProductCard
             key={productItem?.id}
             title={productItem.title}
             productItem={productItem}
           />
+          
         );
       })}
     </Row>
