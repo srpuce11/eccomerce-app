@@ -14,7 +14,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { RequireAuth } from "./components/auth/RequireAuth";
 import { Profile } from "./components/auth/Profile";
 import Cart from "./pages/Cart";
-
+import 'bootstrap/dist/css/bootstrap.min.css';
 import { CartProvider } from "./components/cartSegments/CartContext";
 import Product from "./pages/Product";
 const LazyAbout = React.lazy(() => import("./pages/About"));

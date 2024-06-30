@@ -19,7 +19,7 @@ const ProductCard = ({ title, productItem }) => {
   };
 
   return (
-    <Col md={2} sm={2} xs={2} className="product mtop">
+    <Col md={3} sm={5} xs={10} className="product mtop">
       {title === "Rating" ? (
         <span className="rating">{productItem.rating}</span>
       ) : null}

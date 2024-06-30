@@ -2,17 +2,33 @@
 import React, { useContext } from "react";
 import { CartContext } from "../components/cartSegments/CartContext";
 import { Col, Container, Row } from "react-bootstrap";
+import { useAuth } from "../components/auth/auth"; 
+
 
 const Cart = () => {
   const { cartList, addToCart, decreaseQty, deleteProduct } =
     useContext(CartContext);
-
+    const { user, logout } = useAuth();
+    const tokenParsed = user ? parseJwt(user) : null;
   const totalPrice = cartList.reduce(
     (price, item) => price + item.qty * item.price,
     0
   );
 
-  return (
+
+  function parseJwt (token) {
+    var base64Url = token.split('.')[1];
+    var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+
+    return JSON.parse(jsonPayload);
+  }
+  return (<div>
+    {user ? (
+   
+   
     <section className="cart-items">
       <Container>
         <Row className="justify-content-center">
@@ -33,8 +49,8 @@ const Cart = () => {
                         <Col xs={12} sm={9} className="cart-details">
                           <h3>{item.title}</h3>
                           <h4>
-                            ${item.price}.00 * {item.qty}
-                            <span>${productQty}.00</span>
+                            ${item.price} * {item.qty}
+                            <span>${productQty}</span>
                           </h4>
                         </Col>
                         <Col xs={12} sm={3} className="cartControl">
@@ -69,13 +85,17 @@ const Cart = () => {
               <h2>Cart Summary</h2>
               <div className="d_flex">
                 <h4>Total Price :</h4>
-                <h3>${totalPrice}.00</h3>
+                <h3>${totalPrice}</h3>
               </div>
             </div>
           </Col>
         </Row>
       </Container>
     </section>
+  ) : (
+    <p>Please Login to View your Cart</p>
+  )}
+  </div>
   );
 };
 

@@ -3,8 +3,6 @@ import Banner from "../components/Banner/Banner";
 import { Container } from "react-bootstrap";
 import ShopList from "../components/ShopParts/ShopList";
 import ProductDetails from "../components/ProductDetails/ProductDetails";
-import useWindowScrollToTop from "../components/hooks/useWindowScrollToTop";
-import axios from "axios";
 import { useParams } from "react-router-dom";
 
 const Product = () => {
@@ -12,7 +10,7 @@ const Product = () => {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    fetch("https://fakestoreapi.com/products")
+    fetch("https://fakestoreapi.com/products/id")
       .then((res) => res.json())
       .then((data) => {
         setProducts(data);
@@ -37,8 +35,6 @@ const Product = () => {
       )
     );
   }, [selectedProduct, id]);
-
-  useWindowScrollToTop();
 
   return (
     <Fragment>
