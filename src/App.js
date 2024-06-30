@@ -2,13 +2,15 @@ import logo from "./logo.svg";
 import React from "react";
 import "./App.css";
 import Navbar from "./routing/Navbar";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes,Router } from "react-router-dom";
 import { Home } from "./pages/Home";
 import About from "./pages/About";
-import {Products} from "./pages/Products";
+import {Shop} from "./pages/Shop";
 import { OrderSummary } from "./pages/OrderSummary";
 import { Login } from "./components/auth/Login";
 import { AuthProvider } from "./components/auth/auth";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { RequireAuth } from "./components/auth/RequireAuth";
 import { Profile } from "./components/auth/Profile";
 const LazyAbout = React.lazy(() => import("./pages/About"));
@@ -16,11 +18,23 @@ const LazyAbout = React.lazy(() => import("./pages/About"));
 function App() {
   return (
     <AuthProvider>
+
+    <ToastContainer
+      position="top-right"
+      autoClose={1000}
+      hideProgressBar={false}
+      newestOnTop={false}
+      closeOnClick
+      pauseOnFocusLoss
+      draggable
+      pauseOnHover
+      theme="light"
+    />
       <Navbar />
       <Routes>
       <Route path='/login' element={<Login />} />
         <Route path="/" element={<Home></Home>}></Route>
-        <Route path="/products" element={<Products></Products>}></Route>
+        <Route path="/shop" element={<Shop></Shop>}></Route>
         <Route
           path="/about"
           element={
@@ -39,6 +53,7 @@ function App() {
           }
         />
       </Routes>
+
     </AuthProvider>
   );
 }

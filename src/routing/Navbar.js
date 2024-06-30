@@ -20,8 +20,8 @@ function Navbar() {
       <NavLink to="/about" style={navLinkStyles}>
         About
       </NavLink>
-      <NavLink to="/products" style={navLinkStyles}>
-        Products
+      <NavLink to="/shop" style={navLinkStyles}>
+        Shop
       </NavLink>
       <NavLink to="/profile" style={navLinkStyles}>
         Profile

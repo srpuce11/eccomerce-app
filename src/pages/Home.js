@@ -6,7 +6,6 @@ export const Home = () => {
   return (
     <>
       <SliderHome></SliderHome>
-      <button onClick={() => navigate('order-summary')}>Place order</button>
     </>
   )
 }
