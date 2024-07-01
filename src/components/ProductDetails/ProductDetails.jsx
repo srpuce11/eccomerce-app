@@ -11,7 +11,6 @@ const ProductDetails = ({ selectedProduct }) => {
   };
 
   const handleAdd = (selectedProduct, quantity) => {
-    // Replace this with your add to cart functionality
     toast.success("Product has been added to cart!");
   };
 
@@ -38,7 +37,7 @@ const ProductDetails = ({ selectedProduct }) => {
               <span className="price">${selectedProduct?.price}</span>
               <span>category: {selectedProduct?.category}</span>
             </div>
-            <p>{selectedProduct?.title}</p>
+            <p>{selectedProduct?.shortDesc}</p>
             <input
               className="qty-input"
               type="number"

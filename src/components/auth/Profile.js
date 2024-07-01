@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "./auth"; 
-import jwt_decode from 'jwt-decode';
+
  export const Profile = () => {
   const navigate = useNavigate();
   const { user, logout } = useAuth();

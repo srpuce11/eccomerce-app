@@ -1,10 +1,8 @@
-import logo from "./logo.svg";
 import React from "react";
 import "./App.css";
 import Navbar from "./routing/Navbar";
 import { Route, Routes,Router } from "react-router-dom";
 import { Home } from "./pages/Home";
-import About from "./pages/About";
 import {Shop} from "./pages/Shop";
 import { OrderSummary } from "./pages/OrderSummary";
 import { Login } from "./components/auth/Login";
@@ -22,7 +20,6 @@ const LazyAbout = React.lazy(() => import("./pages/About"));
 function App() {
   return (
     <AuthProvider>
-    <CartProvider>
     <ToastContainer
       position="top-right"
       autoClose={1000}
@@ -59,7 +56,6 @@ function App() {
           }
         />
       </Routes>
-      </CartProvider>
     </AuthProvider>
   );
 }

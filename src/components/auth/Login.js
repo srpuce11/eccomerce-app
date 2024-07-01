@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { useAuth } from "./auth"; // Assuming you have an auth context
-
+import { useAuth } from "./auth"; 
 export const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
-  const auth = useAuth(); // Replace with your actual auth context
+  const auth = useAuth(); 
 
   const redirectPath = location.state?.from || "/";
 
