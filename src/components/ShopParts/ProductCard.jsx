@@ -82,11 +82,8 @@ const ProductCard = ({ title, productItem }) => {
             }),
           });
         }
-
-        toast.success("Cart updated successfully!");
       } catch (err) {
         console.error("Error:", err);
-        toast.error("Failed to update the cart.");
       }
   };
 

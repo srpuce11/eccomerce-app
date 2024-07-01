@@ -92,7 +92,7 @@ const Cart = () => {
 
   return (
     <div>
-
+   
         <section className="cart-items">
           <Container>
             <Row className="justify-content-center">
@@ -166,6 +166,7 @@ const Cart = () => {
             </Row>
           </Container>
         </section>
+   
     </div>
   );
 };

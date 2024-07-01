@@ -29,7 +29,9 @@ export const Login = () => {
 
       const data = await response.json();
       auth.login(data.token);
-      navigate(redirectPath, { replace: true });
+      localStorage.setItem( "userData", data.token );
+      navigate('/');
+
     } catch (error) {
       console.error("Login error:", error);
     }
