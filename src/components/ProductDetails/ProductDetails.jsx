@@ -6,7 +6,7 @@ import "./product-details.css";
 const ProductDetails = ({ id }) => {
   const [selectedProduct, setSelectedProduct] = useState({});
   const [quantity, setQuantity] = useState(1);
-
+console.log("id in product detail" , id);
   useEffect(() => {
     const fetchProduct = async () => {
       try {

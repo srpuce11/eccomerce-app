@@ -15,6 +15,7 @@ import Cart from "./pages/Cart";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { CartProvider } from "./components/cartSegments/CartContext";
 import Product from "./pages/Product";
+import ProductDetails from "./components/ProductDetails/ProductDetails";
 const LazyAbout = React.lazy(() => import("./pages/About"));
 
 function App() {
@@ -37,7 +38,7 @@ function App() {
       <Route path='/login' element={<Login />} />
         <Route path="/" element={<Home></Home>}></Route>
         <Route path="/shop" element={<Shop></Shop>}></Route>
-        <Route path="/shop/:id" element={<Product />} />
+        <Route path="/shop/:id" element={<ProductDetails />} />
         <Route path="/cart" element={<Cart></Cart>}></Route>
         <Route
           path="/about"
