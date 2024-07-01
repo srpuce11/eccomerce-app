@@ -2,11 +2,13 @@ import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Col } from "react-bootstrap";
-import "./product-card.css";
+import { CartContext } from '../cartSegments/CartContext';
+import './product-card.css';
 import { useAuth } from "../auth/auth";
 
 const ProductCard = ({ title, productItem }) => {
   const { user } = useAuth();
+  const { addToCart } = useContext(CartContext);
   const router = useNavigate();
   const handelClick = () => {
     router(`/shop/${productItem.id}`);
@@ -31,6 +33,8 @@ const ProductCard = ({ title, productItem }) => {
   const handelAdd = async (productItem) => {
     if (user) {
       const tokenParsed = parseJwt(user);
+
+      addToCart(productItem, 1);
       toast.success("Product has been added to cart!");
 
       try {
@@ -109,6 +113,7 @@ const ProductCard = ({ title, productItem }) => {
         </div>
         <div className="price">
           <h4>{productItem.price}</h4>
+          
           <button
             aria-label="Add"
             type="submit"

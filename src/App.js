@@ -19,6 +19,7 @@ const LazyAbout = React.lazy(() => import("./pages/About"));
 
 function App() {
   return (
+    <CartProvider>
     <AuthProvider>
     <ToastContainer
       position="top-right"
@@ -57,6 +58,7 @@ function App() {
         />
       </Routes>
     </AuthProvider>
+    </CartProvider>
   );
 }
 

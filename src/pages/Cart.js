@@ -1,12 +1,19 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import React, { useContext } from "react";
+import { CartContext } from "../components/cartSegments/CartContext";
 import { Col, Container, Row } from "react-bootstrap";
 import { useAuth } from "../components/auth/auth";
 import { useNavigate, useLocation } from "react-router-dom";
 
 const Cart = () => {
   const { user } = useAuth();
-  const [cartList, setCartList] = useState([]);
-  const [totalPrice, setTotalPrice] = useState(0);
+  const { cartList, addToCart, decreaseQty, deleteProduct } = useContext(CartContext);
+
+  const totalPrice = cartList.reduce(
+    (price, item) => price + item.qty * item.price,
+    0
+  ).toFixed(2);
+
   const [cartId, setCartId] = useState(null);
   const navigate = useNavigate();
   const [checkoutData, setCheckoutData] = useState({
@@ -56,13 +63,10 @@ const Cart = () => {
             };
           })
         );
-        setCartList(cartProducts);
         setCartId(carts[0].id);
         calculateTotalPrice(cartProducts);
       } else {
-        setCartList([]);
         setCartId(null);
-        setTotalPrice(0);
       }
     } catch (err) {
       console.error("Error:", err);
@@ -73,8 +77,8 @@ const Cart = () => {
     const total = products.reduce(
       (price, item) => price + item.quantity * item.price,
       0
-    );
-    setTotalPrice(total);
+    ).toFixed(2);
+    return total;
   };
   
   const handleCheckout = () => {
@@ -85,111 +89,10 @@ const Cart = () => {
 
     navigate("/order-summary", { state: checkoutData });
   };
-  const addToCart = async (item, qty) => {
-    try {
-      const updatedProducts = [...cartList];
-      const productIndex = updatedProducts.findIndex(
-        (p) => p.productId === item.productId
-      );
-
-      if (productIndex >= 0) {
-        updatedProducts[productIndex].quantity += qty;
-      } else {
-        updatedProducts.push({ ...item, quantity: qty });
-      }
-
-      await fetch(`https://fakestoreapi.com/carts/${cartId}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          userId: user.id,
-          date: new Date().toISOString().slice(0, 10),
-          products: updatedProducts,
-        }),
-      });
-      setCartList(updatedProducts);
-      calculateTotalPrice(updatedProducts);
-    } catch (err) {
-      console.error("Error:", err);
-    }
-  };
-
-  const decreaseQty = async (item) => {
-    try {
-      const updatedProducts = [...cartList];
-      const productIndex = updatedProducts.findIndex(
-        (p) => p.productId === item.productId
-      );
-
-      if (productIndex >= 0 && updatedProducts[productIndex].quantity > 1) {
-        updatedProducts[productIndex].quantity -= 1;
-      } else {
-        updatedProducts.splice(productIndex, 1);
-      }
-
-      await fetch(`https://fakestoreapi.com/carts/${cartId}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          userId: user.id,
-          date: new Date().toISOString().slice(0, 10),
-          products: updatedProducts,
-        }),
-      });
-
-      if (updatedProducts.length === 0) {
-        await fetch(`https://fakestoreapi.com/carts/${cartId}`, {
-          method: "DELETE",
-        });
-        setCartId(null);
-      }
-
-      setCartList(updatedProducts);
-      calculateTotalPrice(updatedProducts);
-    } catch (err) {
-      console.error("Error:", err);
-    }
-  };
-
-  const deleteProduct = async (item) => {
-    try {
-      const updatedProducts = cartList.filter(
-        (p) => p.productId !== item.productId
-      );
-
-      await fetch(`https://fakestoreapi.com/carts/${cartId}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          userId: user.id,
-          date: new Date().toISOString().slice(0, 10),
-          products: updatedProducts,
-        }),
-      });
-
-      if (updatedProducts.length === 0) {
-        await fetch(`https://fakestoreapi.com/carts/${cartId}`, {
-          method: "DELETE",
-        });
-        setCartId(null);
-      }
-
-      setCartList(updatedProducts);
-      calculateTotalPrice(updatedProducts);
-    } catch (err) {
-      console.error("Error:", err);
-    }
-  };
 
   return (
     <div>
-      {user ? (
+
         <section className="cart-items">
           <Container>
             <Row className="justify-content-center">
@@ -198,7 +101,7 @@ const Cart = () => {
                   <h1 className="no-items product">No Items in Cart</h1>
                 )}
                 {cartList.map((item, index) => {
-                  const productQty = item.price * item.quantity;
+                  const productQty = item.price * item.qty;
                   return (
                     <div className="cart-list" key={index}>
                       <Row>
@@ -210,8 +113,8 @@ const Cart = () => {
                             <Col xs={12} sm={9} className="cart-details">
                               <h3>{item.title}</h3>
                               <h4>
-                                ${item.price} * {item.quantity}
-                                <span>${productQty}</span>
+                                ${item.price} * {item.qty}
+                                <span>${productQty.toFixed(2)}</span>
                               </h4>
                             </Col>
                             <Col xs={12} sm={3} className="cartControl">
@@ -263,9 +166,6 @@ const Cart = () => {
             </Row>
           </Container>
         </section>
-      ) : (
-        <p>Please Login to View your Cart</p>
-      )}
     </div>
   );
 };
