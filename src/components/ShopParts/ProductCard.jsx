@@ -35,7 +35,8 @@ const ProductCard = ({ title, productItem }) => {
 
       try {
         const response = await fetch(
-          `https://fakestoreapi.com/carts/user/${tokenParsed?.sub}`
+          `https://fakestoreapi.com/carts/user/${tokenParsed?.sub}`,
+          { method: "GET" }
         );
         const carts = await response.json();
         let cart = carts.length > 0 ? carts[0] : null;
@@ -62,12 +63,12 @@ const ProductCard = ({ title, productItem }) => {
             }),
           });
         } else {
-  
           await fetch("https://fakestoreapi.com/carts", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
+
             body: JSON.stringify({
               userId: tokenParsed?.sub,
               date: new Date().toISOString().slice(0, 10),

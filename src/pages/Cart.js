@@ -1,12 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import { useAuth } from "../components/auth/auth";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const Cart = () => {
   const { user } = useAuth();
   const [cartList, setCartList] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
   const [cartId, setCartId] = useState(null);
+  const navigate = useNavigate();
+  const [checkoutData, setCheckoutData] = useState({
+    itemName: "",
+    itemQuantity: 0,
+    itemPrice: 0,
+  });
 
   useEffect(() => {
     if (user) {
@@ -69,7 +76,15 @@ const Cart = () => {
     );
     setTotalPrice(total);
   };
+  
+  const handleCheckout = () => {
+    setCheckoutData({
+      ...checkoutData,
+      itemPrice: totalPrice,
+    });
 
+    navigate("/order-summary", { state: checkoutData });
+  };
   const addToCart = async (item, qty) => {
     try {
       const updatedProducts = [...cartList];
@@ -94,7 +109,6 @@ const Cart = () => {
           products: updatedProducts,
         }),
       });
-
       setCartList(updatedProducts);
       calculateTotalPrice(updatedProducts);
     } catch (err) {
@@ -227,17 +241,23 @@ const Cart = () => {
                   );
                 })}
               </Col>
-              <Col md={4}>
+              <Col md={3}>
                 <div className="cart-total">
                   <h2>Cart Summary</h2>
                   <div className="d_flex">
                     <h4>Total Price :</h4>
                     <h3>${totalPrice}</h3>
-                    <button>Checkout</button> 
                   </div>
-                  <div className="d_flex">
-                
+                  <div className="d_flex"></div>
                 </div>
+              </Col>
+              <Col md={1}>
+                <div className="cart-total">
+                  <h4>Check Out</h4>
+                  <div className="d_flex">
+                    <button onClick={handleCheckout}> Checkout Now</button>
+                  </div>
+                  <div className="d_flex"></div>
                 </div>
               </Col>
             </Row>
