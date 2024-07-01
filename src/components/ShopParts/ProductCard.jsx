@@ -2,8 +2,8 @@ import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Col } from "react-bootstrap";
-import { CartContext } from '../cartSegments/CartContext';
-import './product-card.css';
+import { CartContext } from "../cartSegments/CartContext";
+import "./product-card.css";
 import { useAuth } from "../auth/auth";
 
 const ProductCard = ({ title, productItem }) => {
@@ -30,16 +30,18 @@ const ProductCard = ({ title, productItem }) => {
     return JSON.parse(jsonPayload);
   }
 
+  if(user){
+    const tokenParsed = parseJwt(user);
+    }
+
   const handelAdd = async (productItem) => {
-    if (user) {
-      const tokenParsed = parseJwt(user);
 
       addToCart(productItem, 1);
       toast.success("Product has been added to cart!");
-
+      const temp = 1;
       try {
         const response = await fetch(
-          `https://fakestoreapi.com/carts/user/${tokenParsed?.sub}`,
+          `https://fakestoreapi.com/carts/user/${temp}`,
           { method: "GET" }
         );
         const carts = await response.json();
@@ -55,7 +57,7 @@ const ProductCard = ({ title, productItem }) => {
             cart.products.push({ productId: productItem.id, quantity: 1 });
           }
 
-          await fetch(`https://fakestoreapi.com/carts/${cart.id}`, {
+          await fetch(`https://fakestoreapi.com/carts/${temp}`, {
             method: "PUT",
             headers: {
               "Content-Type": "application/json",
@@ -74,7 +76,7 @@ const ProductCard = ({ title, productItem }) => {
             },
 
             body: JSON.stringify({
-              userId: tokenParsed?.sub,
+              userId: temp,
               date: new Date().toISOString().slice(0, 10),
               products: [{ productId: productItem.id, quantity: 1 }],
             }),
@@ -86,9 +88,6 @@ const ProductCard = ({ title, productItem }) => {
         console.error("Error:", err);
         toast.error("Failed to update the cart.");
       }
-    } else {
-      toast.error("User is not authenticated.");
-    }
   };
 
   return (
@@ -113,7 +112,7 @@ const ProductCard = ({ title, productItem }) => {
         </div>
         <div className="price">
           <h4>{productItem.price}</h4>
-          
+
           <button
             aria-label="Add"
             type="submit"
