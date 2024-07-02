@@ -26,8 +26,8 @@ export const OrderSummary = () => {
                     {items && items.map((item, index) => (
                       <li key={index}>
                         <div className="d-flex justify-content-between">
-                          <span>{item.title} - {item.qty} x ${item.price.toFixed(2)}</span>
-                          <span>= ${(item.qty * item.price).toFixed(2)}</span>
+                          <span>{item.title} - {item.qty} x {item.price.toFixed(2)}</span>
+                          <span>= {(item.qty * item.price).toFixed(2)}</span>
                         </div>
                       </li>
                     ))}
@@ -36,19 +36,19 @@ export const OrderSummary = () => {
                 <ListGroup.Item>
                   <Row>
                     <Col><h4>Total Price:</h4></Col>
-                    <Col className="text-right"><h4>${totalPriceFloat.toFixed(2)}</h4></Col>
+                    <Col className="text-right"><h4>{totalPriceFloat.toFixed(2)}</h4></Col>
                   </Row>
                 </ListGroup.Item>
                 <ListGroup.Item>
                   <Row>
                     <Col><h4>Tax (18%):</h4></Col>
-                    <Col className="text-right"><h4>${totalTax}</h4></Col>
+                    <Col className="text-right"><h4>{totalTax}</h4></Col>
                   </Row>
                 </ListGroup.Item>
                 <ListGroup.Item>
                   <Row>
                     <Col><h4>Total with Tax:</h4></Col>
-                    <Col className="text-right"><h4>${totalValue}</h4></Col>
+                    <Col className="text-right"><h4>{totalValue}</h4></Col>
                   </Row>
                 </ListGroup.Item>
                 <ListGroup.Item>

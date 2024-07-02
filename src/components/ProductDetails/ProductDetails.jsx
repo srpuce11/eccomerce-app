@@ -26,7 +26,16 @@ const ProductDetails = () => {
   }, [id]);
 
   const handleQuantityChange = (e) => {
-    setQuantity(e.target.value);
+    // Ensure the value is parsed correctly as a number
+    const value = e.target.value;
+    const parsedValue = parseInt(value, 10);
+
+    // Set the quantity only if the parsed value is a number and greater than zero
+    if (!isNaN(parsedValue) && parsedValue > 0) {
+      setQuantity(parsedValue);
+    } else if (value === "") {
+      setQuantity("");
+    }
   };
 
   const handleAdd = async (selectedProduct, quantity) => {
@@ -89,7 +98,7 @@ const ProductDetails = () => {
           </Col>
           <Col md={6}>
             <h2>{selectedProduct.title || "No Title"}</h2>
-            <div className="rate">
+            <div className="ratea">
               <div className="stars">
                 <i className="fa fa-star"></i>
                 <i className="fa fa-star"></i>
@@ -99,7 +108,7 @@ const ProductDetails = () => {
               </div>
             </div>
             <div className="info">
-              <span className="price">${selectedProduct.price || 0}</span>
+              <span className="price">{selectedProduct.price || 0}</span>
               <span>category: {selectedProduct.category || "No Category"}</span>
             </div>
             <p>{selectedProduct.description || "No Description"}</p>
@@ -109,6 +118,7 @@ const ProductDetails = () => {
               placeholder="Qty"
               value={quantity}
               onChange={handleQuantityChange}
+              min="1"
             />
             <button
               aria-label="Add"

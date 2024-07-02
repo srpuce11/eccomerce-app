@@ -24,16 +24,16 @@ function App() {
     <CartProvider>
     <ToastContainer
       position="top-right"
-      autoClose={1000}
-      hideProgressBar={false}
-      newestOnTop={false}
+      autoClose={100}
+      hideProgressBar={true}
+      newestOnTop={true}
       closeOnClick
       pauseOnFocusLoss
       draggable
       pauseOnHover
       theme="light"
     />
-      <Navbar />
+    <Navbar />
       <Routes>
       <Route path='/login' element={<Login />} />
         <Route path="/" element={<Home></Home>}></Route>
