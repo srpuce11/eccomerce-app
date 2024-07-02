@@ -4,7 +4,7 @@ import { CartContext } from "../components/cartSegments/CartContext";
 import { Col, Container, Row } from "react-bootstrap";
 import { useAuth } from "../components/auth/auth";
 import { useNavigate, useLocation } from "react-router-dom";
-
+import { toast } from "react-toastify";
 const Cart = () => {
   const { user } = useAuth();
   const { cartList, addToCart, decreaseQty, deleteProduct } = useContext(CartContext);
@@ -93,6 +93,11 @@ const Cart = () => {
       totalPrice: totalPrice,
     });
 
+
+    if (cartList.length === 0) {
+      toast.error("Please add items in the cart first");
+      return;
+    }
     navigate("/order-summary", { state: {
       items: items,
       totalPrice: totalPrice,

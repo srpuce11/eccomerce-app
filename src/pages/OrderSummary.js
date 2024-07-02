@@ -12,6 +12,7 @@ export const OrderSummary = () => {
   const totalTax = (totalPriceFloat * taxRate).toFixed(2);
   const totalValue = (totalPriceFloat + parseFloat(totalTax)).toFixed(2);
 
+
   return (
     <>
       <Container>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "./auth"; 
+import { toast } from "react-toastify";
 
 export const Login = () => {
   const [username, setUsername] = useState("");
@@ -32,6 +33,7 @@ export const Login = () => {
       });
 
       if (!response.ok) {
+        toast.warning("Login failed");
         throw new Error("Login failed");
       }
 

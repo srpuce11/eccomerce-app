@@ -48,7 +48,7 @@ function App() {
             </React.Suspense>
           }
         ></Route>
-        <Route path='order-summary' element={<OrderSummary></OrderSummary>} />
+        <Route path='order-summary' element={<OrderSummary/>} />
         <Route
           path='/profile'
           element={

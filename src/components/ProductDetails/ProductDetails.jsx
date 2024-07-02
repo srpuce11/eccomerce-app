@@ -26,15 +26,13 @@ const ProductDetails = () => {
   }, [id]);
 
   const handleQuantityChange = (e) => {
-    // Ensure the value is parsed correctly as a number
     const value = e.target.value;
     const parsedValue = parseInt(value, 10);
 
-    // Set the quantity only if the parsed value is a number and greater than zero
     if (!isNaN(parsedValue) && parsedValue > 0) {
       setQuantity(parsedValue);
     } else if (value === "") {
-      setQuantity("");
+      return
     }
   };
 
