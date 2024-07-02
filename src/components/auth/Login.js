@@ -1,14 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "./auth"; 
+
 export const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
-  const auth = useAuth(); 
+  const auth = useAuth();
 
   const redirectPath = location.state?.from || "/";
+
+  useEffect(() => {
+    const token = localStorage.getItem("userData");
+    if (token) {
+      auth.login(token);
+    }
+  }, [auth, navigate, redirectPath]);
 
   const handleLogin = async () => {
     try {
@@ -29,8 +37,8 @@ export const Login = () => {
 
       const data = await response.json();
       auth.login(data.token);
-      localStorage.setItem( "userData", data.token );
-      navigate('/');
+      localStorage.setItem("userData", data.token);
+      navigate(redirectPath);
 
     } catch (error) {
       console.error("Login error:", error);
@@ -51,7 +59,7 @@ export const Login = () => {
         Password:{" "}
         <input
           type="password"
-          value={password}    
+          value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
       </label>{" "}

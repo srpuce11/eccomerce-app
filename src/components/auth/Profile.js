@@ -9,7 +9,8 @@ import { useAuth } from "./auth";
 
   const handleLogout = () => {
     logout();
-    navigate("/");
+    localStorage.removeItem("userData");
+    navigate("/login");
   };
 
   function parseJwt (token) {

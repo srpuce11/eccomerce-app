@@ -17,9 +17,8 @@ const Cart = () => {
   const [cartId, setCartId] = useState(null);
   const navigate = useNavigate();
   const [checkoutData, setCheckoutData] = useState({
-    itemName: "",
-    itemQuantity: 0,
-    itemPrice: 0,
+    items: [],
+    totalPrice: 0,
   });
 
   useEffect(() => {
@@ -82,14 +81,23 @@ const Cart = () => {
   };
   
   const handleCheckout = () => {
+    const items = cartList.map(item => ({
+      title: item.title,
+      qty: item.qty,
+      price: item.price,
+      total: (item.qty * item.price).toFixed(2)
+    }));
+
     setCheckoutData({
-      ...checkoutData,
-      itemPrice: totalPrice,
+      items: items,
+      totalPrice: totalPrice,
     });
 
-    navigate("/order-summary", { state: checkoutData });
+    navigate("/order-summary", { state: {
+      items: items,
+      totalPrice: totalPrice,
+    } });
   };
-
   return (
     <div>
    

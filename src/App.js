@@ -20,8 +20,8 @@ const LazyAbout = React.lazy(() => import("./pages/About"));
 
 function App() {
   return (
-    <CartProvider>
     <AuthProvider>
+    <CartProvider>
     <ToastContainer
       position="top-right"
       autoClose={1000}
@@ -58,8 +58,8 @@ function App() {
           }
         />
       </Routes>
-    </AuthProvider>
     </CartProvider>
+    </AuthProvider>
   );
 }
 

@@ -23,16 +23,12 @@ function Navbar() {
       <NavLink to="/cart" style={navLinkStyles}>
         Cart
       </NavLink>
-      {auth?.user && (
       <NavLink to="/profile" style={navLinkStyles}>
         Profile
       </NavLink>
-    )}
-      {!auth?.user && (
         <NavLink to="/login" style={navLinkStyles}>
           Login
         </NavLink>
-      )}
       <NavLink to="/about" style={navLinkStyles}>
         About
       </NavLink>

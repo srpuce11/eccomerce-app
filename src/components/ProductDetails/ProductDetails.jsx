@@ -1,21 +1,23 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { useParams } from "react-router-dom";
 import { Col, Container, Row } from "react-bootstrap";
 import { toast } from "react-toastify";
+import { CartContext } from "../cartSegments/CartContext";
 import "./product-details.css";
 
-const ProductDetails = ({ id }) => {
+const ProductDetails = () => {
+  const { id } = useParams();
+  const { addToCart } = useContext(CartContext);
   const [selectedProduct, setSelectedProduct] = useState({});
   const [quantity, setQuantity] = useState(1);
-console.log("id in product detail" , id);
+
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const response = await fetch(`https://fakestoreapi.com/products/1`);
+        const response = await fetch(`https://fakestoreapi.com/products/${id}`);
         const product = await response.json();
         setSelectedProduct(product);
       } catch (error) {
-        // console.error("Error fetching product:", error);
-        // Handle error (e.g., show a toast)
         toast.error("Failed to fetch product details");
       }
     };
@@ -27,9 +29,55 @@ console.log("id in product detail" , id);
     setQuantity(e.target.value);
   };
 
-  const handleAdd = (selectedProduct, quantity) => {
+  const handleAdd = async (selectedProduct, quantity) => {
+    addToCart(selectedProduct, quantity);
     toast.success("Product has been added to cart!");
-    // Implement your cart logic here
+    try {
+      const temp = 1; // Replace with the actual user ID
+      const response = await fetch(
+        `https://fakestoreapi.com/carts/user/${temp}`,
+        { method: "GET" }
+      );
+      const carts = await response.json();
+      let cart = carts.length > 0 ? carts[0] : null;
+
+      if (cart) {
+        const existingProduct = cart.products.find(
+          (p) => p.productId === selectedProduct.id
+        );
+        if (existingProduct) {
+          existingProduct.quantity += quantity;
+        } else {
+          cart.products.push({ productId: selectedProduct.id, quantity });
+        }
+
+        await fetch(`https://fakestoreapi.com/carts/${temp}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            userId: cart.userId,
+            date: new Date().toISOString().slice(0, 10),
+            products: cart.products,
+          }),
+        });
+      } else {
+        await fetch("https://fakestoreapi.com/carts", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            userId: temp,
+            date: new Date().toISOString().slice(0, 10),
+            products: [{ productId: selectedProduct.id, quantity }],
+          }),
+        });
+      }
+    } catch (err) {
+      console.error("Error:", err);
+    }
   };
 
   return (
