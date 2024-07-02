@@ -104,7 +104,7 @@ const Cart = () => {
         <section className="cart-items">
           <Container>
             <Row className="justify-content-center">
-              <Col md={8}>
+              <Col md={6}>
                 {cartList.length === 0 && (
                   <h1 className="no-items product">No Items in Cart</h1>
                 )}
@@ -162,7 +162,7 @@ const Cart = () => {
                   <div className="d_flex"></div>
                 </div>
               </Col>
-              <Col md={1}>
+              <Col md={2}>
                 <div className="cart-total">
                   <h4>Check Out</h4>
                   <div className="d_flex">

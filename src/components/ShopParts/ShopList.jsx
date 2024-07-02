@@ -5,7 +5,7 @@ import ProductCard from "./ProductCard";
 const ShopList = ({ productItems }) => {
   useEffect(() => {}, [productItems]);
   if (productItems.length === 0) {
-    return <h1 className="not-found"> Product Not Found !!</h1>;
+    return <h1 className="not-found"> loading new products for you !!</h1>;
   }
   return (
     <Row className="justify-content-center">
